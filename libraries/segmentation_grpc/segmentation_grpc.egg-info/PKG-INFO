@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: segmentation_grpc
+Version: 0.1.0
+Summary: gRPC interface for the segmentation service
+Author: SAM2-Docker Team
+Requires-Python: >=3.7
+Requires-Dist: grpcio
+Requires-Dist: grpcio-tools
+Requires-Dist: protobuf
+Dynamic: author
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

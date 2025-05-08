@@ -1,0 +1,64 @@
+
+# .gitignore - File for specifying which files and directories Git should ignore
+
+# GITIGNORE INSTRUCTIONS:
+# ----------------------
+# - Blank lines or lines starting with # are ignored
+# - Add specific files by name: config.json, passwords.txt
+# - Add files by extension: *.log, *.tmp, *.pyc
+# - Add all files in a directory: logs/
+# - Add directory and all subdirectories: logs/**
+# - Ignore contents but keep directory: logs/*
+# - Negate a pattern (include file): !important.log
+# - Match in any directory: **/node_modules
+# - Use ? to match a single character: file?.txt
+# - Use character ranges: [0-9].txt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+**/*.bak
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Project specific
+logs/
+data/raw/
+data/processed/
+*.log
+config.local.ini
+credentials.json

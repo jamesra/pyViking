@@ -1,0 +1,7 @@
+setup.py
+segmentation_grpc.egg-info/PKG-INFO
+segmentation_grpc.egg-info/SOURCES.txt
+segmentation_grpc.egg-info/dependency_links.txt
+segmentation_grpc.egg-info/entry_points.txt
+segmentation_grpc.egg-info/requires.txt
+segmentation_grpc.egg-info/top_level.txt
