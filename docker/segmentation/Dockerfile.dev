@@ -1,0 +1,16 @@
+# Use an NVIDIA CUDA image as the base
+FROM Dockerfile.prod AS base
+
+# Copy the project directories
+COPY segmentation_grpc /home/user/segmentation_grpc
+COPY segmentation_server /home/user/segmentation_server
+
+# Set ownership of the project directories to the user
+RUN chown -R user:user /home/user/segmentation_grpc
+RUN chown -R user:user /home/user/segmentation_server
+
+# Install the packages
+RUN cd /home/user/segmentation_grpc && \
+    python3 -m pip install -e .
+RUN cd /home/user/segmentation_server && \
+    python3 -m pip install -e .

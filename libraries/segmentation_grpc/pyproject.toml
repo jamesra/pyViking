@@ -1,22 +1,16 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry]
-name = "segmentation_grpc"
-version = "0.1.0"
-description = "gRPC interface for the segmentation service"
-authors = [
-    {name = "James Anderson"}
+requires = [
+    "setuptools>=61.0.0",
+    "wheel",
+    "setuptools_scm>=6.2"
 ]
 
-[tool.poetry.dependencies]
-python = "^3.13"
-
+# Standard project metadata (PEP 621)
 [project]
 name = "segmentation_grpc"
 version = "0.1.0"
 description = "gRPC interface for the segmentation service"
+readme = "README.md"
 authors = [
     {name = "James Anderson"}
 ]
@@ -30,8 +24,12 @@ dependencies = [
 [project.scripts]
 generate-grpc = "segmentation_grpc.generate_grpc:generate_grpc_code"
 
+# Custom setuptools configuration
 [tool.setuptools]
 packages = ["segmentation_grpc"]
+package-data = {"segmentation_grpc" = ["*.proto"]}
+include-package-data = true
 
-[tool.poetry.build]
-script = "build.py"
+# Custom build script hook
+[tool.setuptools.cmdclass]
+build_py = "segmentation_grpc._build.CustomBuildCommand"

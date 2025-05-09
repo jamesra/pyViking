@@ -1,14 +1,3 @@
-Metadata-Version: 2.4
-Name: segmentation_grpc
-Version: 0.1.0
-Summary: gRPC interface for the segmentation service
-Author: James Anderson
-Requires-Python: >=3.13
-Description-Content-Type: text/markdown
-Requires-Dist: grpcio
-Requires-Dist: grpcio-tools
-Requires-Dist: protobuf
-
 segmentation_grpc
 ======
 

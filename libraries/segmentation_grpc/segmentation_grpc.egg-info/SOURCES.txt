@@ -1,4 +1,13 @@
-setup.py
+MANIFEST.in
+README.md
+pyproject.toml
+segmentation_grpc/__init__.py
+segmentation_grpc/__main__.py
+segmentation_grpc/_build.py
+segmentation_grpc/generate_grpc.py
+segmentation_grpc/segmentation.proto
+segmentation_grpc/segmentation_pb2.py
+segmentation_grpc/segmentation_pb2_grpc.py
 segmentation_grpc.egg-info/PKG-INFO
 segmentation_grpc.egg-info/SOURCES.txt
 segmentation_grpc.egg-info/dependency_links.txt
