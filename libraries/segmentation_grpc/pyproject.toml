@@ -32,4 +32,4 @@ include-package-data = true
 
 # Custom build script hook
 [tool.setuptools.cmdclass]
-build_py = "segmentation_grpc._build.CustomBuildCommand"
+build_py = "_build.CustomBuildCommand"

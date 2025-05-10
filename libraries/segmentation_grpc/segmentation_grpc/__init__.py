@@ -1,7 +1,23 @@
-from segmentation_pb2 import (SegmentationRequest,
-                              SegmentationResponse,
-                              Point, Polygon,
-                              SegmentationService)
+from generate_grpc import generate_grpc_code
 
-from segmentation_pb2_grpc import (SegmentationServiceServicer,
-                                   SegmentationService)
+try:
+    from segmentation_pb2 import (SegmentationRequest,
+                                  SegmentationResponse,
+                                  Point, Polygon,
+                                  SegmentationService)
+
+    from segmentation_pb2_grpc import (SegmentationServiceServicer,
+                                       SegmentationService)
+except ModuleNotFoundError:
+    # If the module is not found, it means the gRPC code has not been generated.
+    # Attempt to generate the gRPC code.
+    generate_grpc_code()
+
+    from segmentation_pb2 import (SegmentationRequest,
+                                  SegmentationResponse,
+                                  Point, Polygon,
+                                  SegmentationService)
+
+    from segmentation_pb2_grpc import (SegmentationServiceServicer,
+                                       SegmentationService)
+
