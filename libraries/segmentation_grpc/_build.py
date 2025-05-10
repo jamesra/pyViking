@@ -1,8 +1,6 @@
 # build.py
 import os
 import shutil
-import platform
-import subprocess
 import urllib.request
 import urllib.error
 import time
@@ -11,6 +9,8 @@ import hashlib
 from datetime import datetime
 
 from setuptools.command.build_py import build_py
+
+from generate_grpc import generate_grpc_code
 
 def setup_proto_file():
     """Set up the proto file by downloading it from GitHub."""
@@ -137,6 +137,8 @@ class CustomBuildCommand(build_py):
     def run(self):
         """Run the build command with proto file setup."""
         setup_proto_file()
+
+        generate_grpc_code(True)  # Force regeneration of gRPC code
         # Call the original build_py command
         super().run()
 
