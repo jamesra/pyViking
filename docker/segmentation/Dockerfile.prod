@@ -71,14 +71,22 @@ RUN usermod -aG dialout user
 USER user
 
 ENV PYTHONPATH=/usr/bin/python3
-run python3 -m pip install --upgrade pip
+RUN python3 -m pip install --upgrade pip
 
 # Install the packages that operate the service
 RUN python3 -m pip install sam2
-RUN python3 -m pip install git+https://github.com/jamesra/PyViking.git@master#subdirectory=libraries/segmentation_grpc && python3 -m segmentation_grpc --force
+RUN python3 -m pip install git+https://github.com/jamesra/PyViking.git@master#subdirectory=libraries/segmentation_grpc
+# Generate the grpc files
+# RUN python3 -m segmentation_grpc
 RUN python3 -m pip install git+https://github.com/jamesra/PyViking.git@master#subdirectory=servers/segmentation_server
 
 STOPSIGNAL SIGTERM
+# CMD sudo service ssh start && python3 -m segmentation_server & /bin/bash
 
-ENTRYPOINT ["python3", "-m", "segmentation_server"]
-#CMD sudo service ssh start && python3 -m segmentation_server --generate-grpc & /bin/bash
+COPY start.sh /home/user/start.sh
+RUN sudo chmod +x /home/user/start.sh
+ENTRYPOINT ["/home/user/start.sh"]
+
+# CMD sudo service ssh start & /bin/bash
+
+# ENTRYPOINT ["python3", "-m", "segmentation_server"]*

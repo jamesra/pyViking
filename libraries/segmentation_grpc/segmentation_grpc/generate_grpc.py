@@ -33,7 +33,7 @@ def generate_grpc_code(force: bool):
             if proto_mtime <= pb2_grpc_mtime:
                 print("No changes detected in the proto file. Skipping code generation.")
                 return True
-    
+
     # Command to generate the gRPC code
     cmd = [
         sys.executable, '-m', 'grpc_tools.protoc',
@@ -42,11 +42,15 @@ def generate_grpc_code(force: bool):
         f'--grpc_python_out={current_dir}',
         proto_file
     ]
-    
+
     try:
         # Run the command
         subprocess.check_call(cmd)
-        print(f"Successfully generated gRPC code from {proto_file}")
+
+        if os.path.exists(os.path.join(current_dir, 'segmentation_pb2.py')):
+            print(f"Successfully generated gRPC code from {proto_file} in {}")
+        else:
+            print(f"Failed to generate gRPC code from {proto_file} in {current_dir}")
         
         # Fix imports in the generated files
         _fix_imports()
