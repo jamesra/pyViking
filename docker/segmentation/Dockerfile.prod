@@ -79,13 +79,14 @@ RUN python3 -m pip install sam2
 # Add this line before the step where you want to force a rebuild
 ARG CACHE_DATE=2023-06-20
 
+RUN python3 -m pip install grpcio grpcio-tools protobuf
 RUN python3 -m pip install git+https://github.com/jamesra/PyViking.git@master#subdirectory=libraries/segmentation_grpc
 # Generate the grpc files
 # RUN python3 -m segmentation_grpc
 RUN python3 -m pip install git+https://github.com/jamesra/PyViking.git@master#subdirectory=servers/segmentation_server
 
 STOPSIGNAL SIGTERM
-# CMD sudo service ssh start && python3 -m segmentation_server & /bin/bash
+# CMD sudo service ssh start && python3 -m segmentation_server && /bin/bash
 
 COPY start.sh /home/user/start.sh
 RUN sudo chmod +x /home/user/start.sh
