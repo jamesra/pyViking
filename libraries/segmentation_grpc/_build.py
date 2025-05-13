@@ -26,7 +26,7 @@ def setup_proto_file():
     target = os.path.join(current_dir, 'segmentation.proto')
 
     # GitHub URL for the proto file
-    github_url = 'https://raw.githubusercontent.com/jamesra/Viking_gRPC_protos/master/Segmentation/SAM2/segmentation.proto'
+    github_url = 'https://raw.githubusercontent.com/jamesra/pyViking/master/libraries/segmentations_grpc/segmentation_grpc/segmentation.proto'
 
     # Check if we need to download the file
     need_download = True

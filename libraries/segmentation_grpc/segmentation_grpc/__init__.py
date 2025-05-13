@@ -10,10 +10,11 @@ try:
                                        SegmentationService)
 except ModuleNotFoundError:
     # If the module is not found, it means the gRPC code has not been generated.
-    # Attempt to generate the gRPC code.
-    if(!generate_grpc_code(True)):
+    # Attempt to generate the gRPC code. 
+    if not generate_grpc_code(True):
         print("Failed to generate gRPC code. Please check the proto file.")
-
+        raise
+        
     from segmentation_pb2 import (SegmentationRequest,
                                   SegmentationResponse,
                                   Point, Polygon,

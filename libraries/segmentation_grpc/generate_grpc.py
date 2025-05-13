@@ -81,4 +81,4 @@ def _fix_imports():
         print(f"Fixed imports in {pb2_grpc_file}")
 
 if __name__ == '__main__':
-    generate_grpc_code()
+    generate_grpc_code(True)

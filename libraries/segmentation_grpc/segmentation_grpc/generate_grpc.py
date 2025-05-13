@@ -48,7 +48,7 @@ def generate_grpc_code(force: bool = False):
         subprocess.check_call(cmd)
 
         if os.path.exists(os.path.join(current_dir, 'segmentation_pb2.py')):
-            print(f"Successfully generated gRPC code from {proto_file} in {}")
+            print(f"Successfully generated gRPC code from {proto_file} in {current_dir}")
         else:
             print(f"Failed to generate gRPC code from {proto_file} in {current_dir}")
         
@@ -85,4 +85,4 @@ def _fix_imports():
         print(f"Fixed imports in {pb2_grpc_file}")
 
 if __name__ == '__main__':
-    generate_grpc_code()
+    generate_grpc_code(True)
