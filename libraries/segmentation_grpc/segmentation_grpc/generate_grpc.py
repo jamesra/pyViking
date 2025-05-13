@@ -9,7 +9,7 @@ import os
 import sys
 import subprocess
 
-def generate_grpc_code(force: bool):
+def generate_grpc_code(force: bool = False):
     """Generate the gRPC code from the proto file.
     :param force: If True, force generation even if the proto file hasn't been modified since the last generation.  If False, skip generation if the proto file hasn't been modified since the last generation.
     :return: True if we believe the code was generated successfully, or already exists.  False otherwise."""

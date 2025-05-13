@@ -11,7 +11,8 @@ try:
 except ModuleNotFoundError:
     # If the module is not found, it means the gRPC code has not been generated.
     # Attempt to generate the gRPC code.
-    generate_grpc_code()
+    if(!generate_grpc_code(True)):
+        print("Failed to generate gRPC code. Please check the proto file.")
 
     from segmentation_pb2 import (SegmentationRequest,
                                   SegmentationResponse,
