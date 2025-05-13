@@ -11,7 +11,7 @@ try:
 except ModuleNotFoundError:
     # If the module is not found, it means the gRPC code has not been generated.
     # Attempt to generate the gRPC code.
-    generate_grpc_code()
+    generate_grpc_code(True)
 
     from segmentation_pb2 import (SegmentationRequest,
                                   SegmentationResponse,
