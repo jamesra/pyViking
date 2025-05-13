@@ -75,6 +75,10 @@ RUN python3 -m pip install --upgrade pip
 
 # Install the packages that operate the service
 RUN python3 -m pip install sam2
+
+# Add this line before the step where you want to force a rebuild
+ARG CACHE_DATE=2023-06-20
+
 RUN python3 -m pip install git+https://github.com/jamesra/PyViking.git@master#subdirectory=libraries/segmentation_grpc
 # Generate the grpc files
 # RUN python3 -m segmentation_grpc
