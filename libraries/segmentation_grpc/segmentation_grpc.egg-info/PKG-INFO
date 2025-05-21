@@ -1,4 +1,4 @@
-Metadata-Version: 2.4
+Metadata-Version: 2.2
 Name: segmentation_grpc
 Version: 0.1.0
 Summary: gRPC interface for the segmentation service
@@ -8,6 +8,7 @@ Description-Content-Type: text/markdown
 Requires-Dist: grpcio
 Requires-Dist: grpcio-tools
 Requires-Dist: protobuf
+Dynamic: requires-python
 
 segmentation_grpc
 ======
