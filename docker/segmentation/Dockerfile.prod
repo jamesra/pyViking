@@ -64,6 +64,14 @@ RUN cd /home/user/segment-anything-2/sam2/configs/sam2.1/ && \
 	wget https://github.com/facebookresearch/sam2/blob/main/sam2/configs/sam2.1/sam2.1_hiera_t.yaml && \
 	cd ..
 
+RUN mkdir /home/user/segment-anything-2/sam2/checkpoints/ && \
+    cd /home/user/segment-anything-2/sam2/checkpoints/ && \
+    wget https://dl.fbaipublicfiles.com/segment_anything_2/092824/sam2.1_hiera_tiny.pt && \
+    wget https://dl.fbaipublicfiles.com/segment_anything_2/092824/sam2.1_hiera_small.pt && \
+    wget https://dl.fbaipublicfiles.com/segment_anything_2/092824/sam2.1_hiera_base_plus.pt && \
+    wget https://dl.fbaipublicfiles.com/segment_anything_2/092824/sam2.1_hiera_large.pt && \
+    cd ..
+
 # Expose the gRPC port
 EXPOSE 50051
 
@@ -74,7 +82,7 @@ ENV PYTHONPATH=/usr/bin/python3
 RUN python3 -m pip install --upgrade pip
 
 # Install the packages that operate the service
-RUN python3 -m pip install sam2
+# RUN python3 -m pip install sam2
 
 # Add a build argument for cache busting
 # Change this value to force Docker to rebuild from this point
@@ -86,17 +94,13 @@ RUN python3.13 -m pip install --upgrade grpcio grpcio-tools protobuf google
 # Verify grpcio-tools is installed correctly
 RUN python3 -c "import grpc_tools.protoc; print('grpcio-tools installed successfully')"
 
-#########################
-ARG CACHE_DATE=2023-07-05
-#########################
-
 # Clone the PyViking repository to get the proto file
 RUN git clone --recurse-submodules https://github.com/jamesra/PyViking.git /home/user/pyViking
 
-RUN ls -la /home/user/pyViking
+#RUN ls -la /home/user/pyViking
 
 RUN cp /home/user/pyViking/external/Segmentation/SAM2/segmentation.proto /home/user/pyViking/libraries/segmentation_grpc/segmentation_grpc/segmentation.proto
-RUN ls -la /home/user/pyViking/libraries/segmentation_grpc/segmentation_grpc/
+#RUN ls -la /home/user/pyViking/libraries/segmentation_grpc/segmentation_grpc/
 
 
 RUN python3 -m grpc_tools.protoc \
@@ -109,10 +113,14 @@ RUN python3 -m grpc_tools.protoc \
 RUN pip install -v --no-cache-dir /home/user/pyViking/libraries/segmentation_grpc
 RUN pip install -v --no-cache-dir /home/user/pyViking/servers/segmentation_server
 
+RUN mkdir /home/user/.local/lib/python3.13/site-packages/checkpoints/
+RUN cp /home/user/segment-anything-2/sam2/checkpoints/*.pt /home/user/.local/lib/python3.13/site-packages/checkpoints/
+
 # Generate the gRPC files explicitly after installation
+
 #RUN python3 -m pip install --no-cache-dir git+https://github.com/jamesra/PyViking.git@master#subdirectory=servers/segmentation_server
 
-RUN ls -la /home/user/.local/lib/python3.13/site-packages/segmentation_grpc/
+#RUN ls -la /home/user/.local/lib/python3.13/site-packages/segmentation_grpc/
 STOPSIGNAL SIGTERM
 # CMD sudo service ssh start && python3 -m segmentation_server && /bin/bash
 

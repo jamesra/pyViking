@@ -28,7 +28,7 @@ from segmentation_grpc import (
     Point,
     Polygon,
     SegmentResult,
-    SegmentationServiceStub
+    SegmentationServiceStub,
 )
 
 np.random.seed(16)

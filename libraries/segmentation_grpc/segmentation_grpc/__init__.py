@@ -10,7 +10,8 @@ try:
     from . import segmentation_pb2_grpc
     from .segmentation_pb2_grpc import (SegmentationServiceServicer,
                                         add_SegmentationServiceServicer_to_server,
-                                            SegmentationService)
+                                            SegmentationService,
+                                        SegmentationServiceStub)
 except ModuleNotFoundError:
     # If the module is not found, it means the gRPC code has not been generated.
     # Attempt to generate the gRPC code.
