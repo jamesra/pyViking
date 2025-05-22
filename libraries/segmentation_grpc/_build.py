@@ -10,10 +10,10 @@ from datetime import datetime
 
 from setuptools.command.build_py import build_py
 
-from segmentation_grpc.generate_grpc import generate_grpc_code
+
 
 def setup_proto_file():
-    """Set up the proto file by downloading it from GitHub."""
+    """Set up the proto file by first looking in the external directory, then downloading from GitHub if not found."""
 
     # Get the current directory and package directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -23,10 +23,26 @@ def setup_proto_file():
     os.makedirs(package_dir, exist_ok=True)
 
     # Target path (absolute)
-    target = os.path.join(current_dir, 'segmentation.proto')
+    target = os.path.join(current_dir, 'segmentation_grpc', 'segmentation.proto')
 
-    # GitHub URL for the proto file
-    github_url = 'https://raw.githubusercontent.com/jamesra/pyViking/master/libraries/segmentations_grpc/segmentation_grpc/segmentation.proto'
+    # First, try to find the proto file in the external directory
+    possible_locations = [
+        os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(current_dir))), 'external', 'Segmentation', 'SAM2', 'segmentation.proto'),
+        os.path.join(os.path.dirname(os.path.dirname(current_dir)), 'external', 'Segmentation', 'SAM2', 'segmentation.proto'),
+        'external/Segmentation/SAM2/segmentation.proto',
+        '/home/user/external/Segmentation/SAM2/segmentation.proto'  # Docker container path
+    ]
+
+    for local_source in possible_locations:
+        if os.path.exists(local_source):
+            print(f"Found proto file at {local_source}")
+            shutil.copy2(local_source, target)
+            print(f"Copied proto file from {local_source} to {target}")
+            return True
+
+    # If not found in external directory, try to download from GitHub
+    # GitHub URL for the proto file (corrected URL)
+    github_url = 'https://raw.githubusercontent.com/jamesra/pyViking/master/libraries/segmentation_grpc/segmentation_grpc/segmentation.proto'
 
     # Check if we need to download the file
     need_download = True
@@ -108,39 +124,11 @@ def setup_proto_file():
             return True
         except urllib.error.URLError as e:
             print(f"Error downloading proto file: {e}")
-
-            # Try to find a local copy as a fallback
-            # Look in several possible locations
-            possible_locations = [
-                os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(current_dir))), 'external', 'Segmentation', 'SAM2', 'segmentation.proto'),
-                os.path.join(os.path.dirname(os.path.dirname(current_dir)), 'external', 'Segmentation', 'SAM2', 'segmentation.proto'),
-                'external/Segmentation/SAM2/segmentation.proto'
-            ]
-
-            for local_source in possible_locations:
-                if os.path.exists(local_source):
-                    print(f"Falling back to local copy at {local_source}")
-                    shutil.copy2(local_source, target)
-                    print(f"Copied local proto file from {local_source} to {target}")
-                    return True
-
-            print(f"No local copy found in any of the expected locations")
+            print(f"No local copy found in any of the expected locations and GitHub download failed")
             return False
 
     # If we get here, it means we didn't need to download and kept the local file
     return True
-
-
-class CustomBuildCommand(build_py):
-    """Custom build command to copy proto files before building."""
-
-    def run(self):
-        """Run the build command with proto file setup."""
-        setup_proto_file()
-
-        generate_grpc_code()  # Force regeneration of gRPC code
-        # Call the original build_py command
-        super().run()
 
 
 if __name__ == "__main__":

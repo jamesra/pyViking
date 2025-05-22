@@ -30,6 +30,3 @@ packages = ["segmentation_grpc"]
 package-data = {"segmentation_grpc" = ["*.proto"]}
 include-package-data = true
 
-# Custom build script hook
-[tool.setuptools.cmdclass]
-build_py = "_build.CustomBuildCommand"
