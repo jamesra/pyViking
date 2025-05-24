@@ -95,13 +95,14 @@ RUN python3.13 -m pip install --upgrade grpcio grpcio-tools protobuf google
 RUN python3 -c "import grpc_tools.protoc; print('grpcio-tools installed successfully')"
 
 # Clone the PyViking repository to get the proto file
-RUN git clone --recurse-submodules https://github.com/jamesra/PyViking.git /home/user/pyViking
+RUN git clone --recurse-submodules https://github.com/jamesra/PyViking.git /home/user/pyViking && \
+    cd /home/user/pyViking && \
+    git checkout tags/v1.0.0
 
 #RUN ls -la /home/user/pyViking
 
 RUN cp /home/user/pyViking/external/Segmentation/SAM2/segmentation.proto /home/user/pyViking/libraries/segmentation_grpc/segmentation_grpc/segmentation.proto
 #RUN ls -la /home/user/pyViking/libraries/segmentation_grpc/segmentation_grpc/
-
 
 RUN python3 -m grpc_tools.protoc \
     --proto_path=/home/user/pyViking/libraries/segmentation_grpc/segmentation_grpc \
